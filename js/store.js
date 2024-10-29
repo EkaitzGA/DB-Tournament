@@ -1,6 +1,6 @@
 class Store {
     constructor() {
-        this.fightersData = null;
+        this.fightersData = [];
     }
 
     setFightersData(data) {

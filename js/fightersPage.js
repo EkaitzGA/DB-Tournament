@@ -1,5 +1,127 @@
 import { store } from "./store.js";
 
+
+export class FilterBar {
+  constructor(parentId, onFilterChange) {
+    this.parentId = parentId
+    this.parent = document.getElementById(parentId)
+    this.onFilterChange = onFilterChange
+    this.createFilterContainer()
+    this.createRaceSelector()
+    /* this.createSortByPower() */
+
+  }
+
+  createFilterContainer() {
+    this.filters = document.createElement("div")
+    this.filters.classList.add("filter-bar")
+    this.parent.appendChild(this.filters)
+  }
+
+  createRaceSelector() {
+    const selector = this.createSelector()
+    const fighters = store.getFightersData();
+
+    const normalizedRaces = fighters.items.map(item => ({
+      ...item, race: item.race.includes("Nucleico") ? "God" : item.race
+    }));
+
+    const uniqueRaces = [...new Set(normalizedRaces.map(item => item.race))];
+
+    const options = uniqueRaces.map(race => { return { value: race, title: race } })
+
+    options.unshift({
+      value: "all",
+      title: "All races"
+    })
+    this.addSelectorOptions(selector, options);
+    selector.addEventListener("change", (e) => {
+      const selectedRace = e.target.value;
+      this.onFilterChange(selectedRace);
+    })
+    return selector;
+
+  }
+  createSelector() {
+    this.selector = document.createElement("select");
+    this.selector.classList.add("race-selector")
+    this.filters.appendChild(this.selector);
+    return this.selector
+  }
+  addSelectorOptions(selector, options) {
+    for (const option of options) {
+      const optionElement = document.createElement("option")
+      optionElement.value = option.value
+      optionElement.innerText = option.title;
+      this.selector.appendChild(optionElement)
+    }
+    return selector
+  }
+  /* createSortByPower() {
+
+  } */
+
+}
+
+class FightersPage {
+  constructor(parentId) {
+    this.parentId = parentId
+    this.parent = document.getElementById(parentId);
+    this.currentFilter = "all"
+    this.filterBar = new FilterBar(parentId, (race) => this.filterFighters(race))
+    this.showFighters();
+  }
+  filterFighters(race) {
+    this.currentFilter = race;
+    if (this.gridContainer) {
+      this.gridContainer.innerHTML = ""
+    }
+    this.showFighters()
+  }
+
+  showFighters() {
+    const fighters = store.getFightersData();
+    if (fighters && fighters.items) {
+        if (!this.gridContainer) {
+            this.createFightersGrid();
+        }
+        
+      
+        let filteredFighters = fighters.items;
+        if (this.currentFilter !== "all") {
+            filteredFighters = fighters.items.filter(fighter => {
+                const fighterRace = fighter.race.includes("Nucleico") ? "God" : fighter.race;
+                return fighterRace === this.currentFilter;
+            });
+        }
+        
+        this.displayFighters(filteredFighters); 
+    }
+}
+
+    createFightersGrid() {
+      this.gridContainer = document.createElement("div");
+      this.gridContainer.id = "fighters-grid";
+      this.parent.appendChild(this.gridContainer);
+    }
+
+    displayFighters(fighters) {
+      fighters.forEach(fighter => {
+        const cardContainer = document.createElement("div");
+        cardContainer.id = `fighter-container-${fighter.id}`;
+        this.gridContainer.appendChild(cardContainer);
+
+        new FavFighterCard(fighter, cardContainer.id);
+      });
+    }
+
+    /* showError(message) {
+        const errorDiv = document.createElement("div");
+        errorDiv.className = "error-message";
+        errorDiv.textContent = message;
+        this.parent.appendChild(errorDiv);
+    } */
+  }
 class FavFighterCard {
   constructor(fighter, parentId) {
     this.fighter = fighter;
@@ -25,7 +147,7 @@ class FavFighterCard {
     this.info.id = "fighter-info"
 
     let raceInfo = this.fighter.race
-    if(raceInfo.includes("Nucleico")){
+    if (raceInfo.includes("Nucleico")) {
       raceInfo = "God"
     }
     this.info.innerHTML =
@@ -36,53 +158,11 @@ class FavFighterCard {
     this.GoFightButton.id = "fight-button"
     this.GoFightButton.innerText = "GO FIGHT!"
 
-    this.card.append(this.backgroundPic, this.info, this.GoFightButton,this.fighterPic);
-   /*  this.backgroundPic.appendChild(this.fighterPic) */
+    this.card.append(this.backgroundPic, this.info, this.GoFightButton, this.fighterPic);
+    /*  this.backgroundPic.appendChild(this.fighterPic) */
 
     this.parent.appendChild(this.card);
   }
-}
-
-
-class FightersPage {
-  constructor(parentId) {
-    this.parentId = parentId
-    this.parent = document.getElementById(parentId);
-    this.showFighters();
-  }
-
-  showFighters() {
-    const fighters = store.getFightersData();
-    if (fighters && fighters.items) {
-      this.createFightersGrid();
-      this.displayFighters(fighters.items);
-    } /* else {
-          this.showError("No fighters data available");
-      } */
-  }
-
-  createFightersGrid() {
-    this.gridContainer = document.createElement("div");
-    this.gridContainer.id = "fighters-grid";
-    this.parent.appendChild(this.gridContainer);
-  }
-
-  displayFighters(fighters) {
-    fighters.forEach(fighter => {
-      const cardContainer = document.createElement("div");
-      cardContainer.id = `fighter-container-${fighter.id}`;
-      this.gridContainer.appendChild(cardContainer);
-
-      new FavFighterCard(fighter, cardContainer.id);
-    });
-  }
-
-  /* showError(message) {
-      const errorDiv = document.createElement("div");
-      errorDiv.className = "error-message";
-      errorDiv.textContent = message;
-      this.parent.appendChild(errorDiv);
-  } */
 }
 
 export default FightersPage;
