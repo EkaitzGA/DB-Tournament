@@ -49,14 +49,13 @@ text-align: center;
     
 } */
 #announcer-pic{
-    
     display: flex;
     width: 42%;
     justify-content: flex-end;
 
 }
 
-#fighter-card {
+#fighter-card{
     position: relative;
     border-radius: 10px;
     overflow: hidden;
@@ -104,12 +103,50 @@ text-align: center;
     background: #3f3d3c;
 }
 
-
-
 #fighters-grid {
-
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 20px;
     padding: 20px;
 }
+
+/* Contenedor del torneo */
+#tournament-fighters {
+    width: 300px; /* Reducido de 300px */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Modificar tamaño de las cartas solo dentro del torneo */
+#tournament-fighters #fighter-card {
+    transform: scale(0.7);
+    transform-origin: top left;
+    margin-bottom: -70px; /* Compensar el espacio extra que deja el scale */
+}
+
+/* Ajustar la altura de la imagen de fondo para la versión más pequeña */
+#tournament-fighters #fighter-background-pic {
+    height: 250px; /* Reducido de 300px */
+}
+
+/* Ajustar la posición de la imagen del luchador */
+#tournament-fighters #fighter-pic {
+    top: 35%; /* Ajustado de 35% */
+    max-height: 240px; /* Reducido de 250px */
+}
+
+/* Reducir el padding del contenedor de información */
+#tournament-fighters #fighter-info {
+    padding: 10px; /* Reducido de 15px */
+}
+
+/* Reducir el tamaño del texto */
+/* #tournament-fighters #fighter-info h3 {
+    font-size: 1.2em;
+} */
+
+/* #tournament-fighters #fighter-info p {
+    font-size: 0.8em;
+} */

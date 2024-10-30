@@ -1,5 +1,5 @@
 import { store } from "./store.js";
-/* import { TournamentFight } from "./tournamentPage.js"; */
+import { TournamentFight } from "./tournamentPage.js";
 
 
 export class FilterBar {
@@ -230,7 +230,10 @@ export class Tournament {
   }
 
   showTournamentPage(){
-    
+    if(this.favFighters.length != this.maxFighters){
+      alert("You need to complete the roster to start the tournament")
+      return
+    }
       while (this.parent.firstChild) {
           this.parent.removeChild(this.parent.firstChild)
       }
