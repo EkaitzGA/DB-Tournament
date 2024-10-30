@@ -224,7 +224,7 @@ export class Tournament {
   startTournament() {
     this.goTournament = document.createElement("button")
     this.goTournament.id = "go-tournament-button"
-    this.goTournament.innerText = "START TOURNAMENT"
+    this.goTournament.innerText = "Save and START TOURNAMENT"
     this.parent.appendChild(this.goTournament)
     this.goTournament.addEventListener("click", () => this.showTournamentPage())
   }

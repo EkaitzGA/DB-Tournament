@@ -1,15 +1,24 @@
-
-
 export class TournamentFight {
     constructor(parentId, favFighters) {
         this.parentId = parentId
         this.parent = document.getElementById(parentId);
         if (!favFighters || favFighters.length === 0) {
-            console.error('No fighters selected for tournament, please go to fighters roster');
+            this.displayErrorMessage();
             return;
         }
         this.favFighters = favFighters
         this.startTournament()
+    }
+
+    displayErrorMessage() {
+        const errorElement = document.createElement("div")
+        errorElement.id = ("tournament-error-message")
+        errorElement.textContent = "Not enough fighters have been selected for tournament, please go to the fighters roster"
+        const errorPicSatan = document.createElement("img")
+        errorPicSatan.id = ("error-satan")
+        errorPicSatan.src = ("../multimedia/mrsatan.webp")
+        this.parent.appendChild(errorPicSatan)
+        this.parent.appendChild(errorElement)
     }
 
     startTournament() {
@@ -17,10 +26,11 @@ export class TournamentFight {
         this.createTournamentHeader()
         this.createTournamentFighters()
         this.displayTournamentFighters()
+        this.createTournamentGrid()
     }
 
+    // Crear un contenedor principal para el torneo
     createTournamentLayout() {
-        // Crear un contenedor principal para el torneo
         this.tournamentContainer = document.createElement("div");
         this.tournamentContainer.id = "tournament-container";
         this.tournamentContainer.style.position = "relative";
@@ -38,17 +48,10 @@ export class TournamentFight {
         this.tournamentContainer.appendChild(header);
     }
 
-
-
     createTournamentFighters() {
         this.tournamentFightersContainer = document.createElement("div");
         this.tournamentFightersContainer.id = "tournament-fighters";
-        this.tournamentFightersContainer.style.width = "300px";
-        this.tournamentFightersContainer.style.display = "flex";
-        this.tournamentFightersContainer.style.flexDirection = "column";
-        this.tournamentFightersContainer.style.gap = "20px";
-        this.tournamentFightersContainer.style.padding = "20px";
-        this.parent.appendChild(this.tournamentFightersContainer);
+        this.tournamentContainer.appendChild(this.tournamentFightersContainer);
     }
 
     displayTournamentFighters() {
@@ -60,6 +63,7 @@ export class TournamentFight {
             this.createTournamentCard(fighterCard.fighter, tournamentCardContainer.id)
         })
     }
+
     createTournamentCard(fighter, containerId) {
         const container = document.getElementById(containerId);
 
@@ -87,20 +91,33 @@ export class TournamentFight {
         if (raceInfo.includes("Nucleico")) {
             raceInfo = "God";
         }
-        
+
         info.innerHTML = `
             <h3>${fighter.name}</h3>
             <p>Race: ${raceInfo}</p>
         `;
 
-        
+
         card.append(backgroundPic, info, fighterPic);
         container.appendChild(card);
     }
-/* 
-    createTournamentChart() {
 
-    } */
+    createTournamentGrid() {
+        const gridContainer = document.createElement("div");
+        gridContainer.classList.add("tournament-grid-container");
+
+        this.simFightButton = document.createElement("button")
+        this.simFightButton.classList.add("sim-fight-button")
+        this.simFightButton.innerText = "Simulate Fight"
+
+        for (let i = 1; i < 15; i++) {
+            const gridItem = document.createElement("div");
+            gridItem.classList.add("tournament-grid-item", `item-${i}`);
+            gridContainer.appendChild(gridItem);
+        }
+
+        this.tournamentContainer.append(gridContainer, this.simFightButton);
+    }
 }
 
 

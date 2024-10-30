@@ -3,13 +3,14 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background-attachment: fixed;    
+    background-attachment: fixed;
 }
 
-#navbar{
+#navbar {
     display: flex;
-text-align: center;
+    text-align: center;
 }
+
 #navbar a {
     text-decoration: none;
     padding: 30px;
@@ -18,44 +19,37 @@ text-align: center;
     font-size: 1.2em;
 }
 
-#card-container{
+#card-container {
     position: relative;
-   display: flex;
-   justify-content: space-between;
-   align-items: flex-start;
-   padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px;
 }
-.left-content{
+
+.left-content {
     position: relative;
     display: flex;
     flex-direction: column;
     width: 55%;
 }
-#message-container{
+
+#message-container {
     position: relative;
     display: flex;
     z-index: 1;
     width: 100%;
-   
+
 }
-/* #welcome-message{
-    position: absolute;
-    display: flex;
-    z-index: 2;
-    width: 100%;
-    height: 100%;
-    margin-top: 20;
-   
-    
-} */
-#announcer-pic{
+
+#announcer-pic {
     display: flex;
     width: 42%;
     justify-content: flex-end;
 
 }
 
-#fighter-card{
+#fighter-card {
     position: relative;
     border-radius: 10px;
     overflow: hidden;
@@ -67,7 +61,7 @@ text-align: center;
 #fighter-background-pic {
     position: relative;
     width: 100%;
-    height: 300px; /* Altura fija para la sección de imágenes */
+    height: 300px;
     object-fit: cover;
     z-index: 1;
     opacity: 0.7;
@@ -79,7 +73,7 @@ text-align: center;
     left: 50%;
     transform: translate(-50%, -50%);
     max-width: 80%;
-    max-height: 250px; /* Ligeramente menor que el contenedor para asegurar que no sobresalga */
+    max-height: 250px;
     object-fit: contain;
     z-index: 2;
 }
@@ -112,41 +106,105 @@ text-align: center;
 
 /* Contenedor del torneo */
 #tournament-fighters {
-    width: 300px; /* Reducido de 300px */
     display: flex;
-    flex-direction: column;
-    gap: 20px;
+    flex-direction: row;
+    gap: 25px;
     padding: 20px;
 }
 
-/* Modificar tamaño de las cartas solo dentro del torneo */
-#tournament-fighters #fighter-card {
-    transform: scale(0.7);
-    transform-origin: top left;
-    margin-bottom: -70px; /* Compensar el espacio extra que deja el scale */
+/*TODO arreglar la colocación de Satan*/
+#error-satan {
+    display: flex;
+    width: 30%;
+
 }
 
-/* Ajustar la altura de la imagen de fondo para la versión más pequeña */
-#tournament-fighters #fighter-background-pic {
-    height: 250px; /* Reducido de 300px */
+.tournament-grid-container {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(7, 100px);
+    gap: 10px;
+    width: 100%;
+    /* Ajustar el tamaño según sea necesario */
+    max-width: 600px;
+    margin: 0 auto;
 }
 
-/* Ajustar la posición de la imagen del luchador */
-#tournament-fighters #fighter-pic {
-    top: 35%; /* Ajustado de 35% */
-    max-height: 240px; /* Reducido de 250px */
+/* Definimos las áreas de la cuadrícula para cada carta */
+.tournament-grid-container {
+    padding-top:20px;
+    
+    grid-template-areas:
+        "a . . . . . e"
+        ". i . . . k ."
+        "b . . . . . f"
+        ". . m . n . ."
+        "c . . . . . g"
+        ". j . . . l ."
+        "d . . . . . h"
+    ;
 }
 
-/* Reducir el padding del contenedor de información */
-#tournament-fighters #fighter-info {
-    padding: 10px; /* Reducido de 15px */
+/* Asignamos cada carta a su área correspondiente */
+.tournament-grid-item {
+    background-image: url("../multimedia/favBackgroundCutted.jpg");
+    border: 1px solid #ff5722;
+    border-radius: 10px;
+    background-size: cover;
 }
 
-/* Reducir el tamaño del texto */
-/* #tournament-fighters #fighter-info h3 {
-    font-size: 1.2em;
-} */
+.item-1 {
+    grid-area: a;
+}
 
-/* #tournament-fighters #fighter-info p {
-    font-size: 0.8em;
-} */
+.item-2 {
+    grid-area: b;
+}
+
+.item-3 {
+    grid-area: c;
+}
+
+.item-4 {
+    grid-area: d;
+}
+
+.item-5 {
+    grid-area: e;
+}
+
+.item-6 {
+    grid-area: f;
+}
+
+.item-7 {
+    grid-area: g;
+}
+
+.item-8 {
+    grid-area: h;
+}
+
+.item-9 {
+    grid-area: i;
+}
+
+.item-10 {
+    grid-area: j;
+}
+
+.item-11 {
+    grid-area: k;
+}
+
+.item-12 {
+    grid-area: l;
+}
+
+.item-13 {
+    grid-area: m;
+}
+
+.item-14 {
+    grid-area: n;
+}

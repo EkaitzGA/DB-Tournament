@@ -1,5 +1,6 @@
 import { fetchData } from "./api.js"
 import FightersPage from "./fightersPage.js"
+import { TournamentFight } from "./tournamentPage.js";
 
 
 class MainPageCard {
@@ -12,11 +13,10 @@ class MainPageCard {
     
     asignNavLogic() {
         const roster = document.getElementById("nav-roster");
-        /* const tournament = document.getElementById("nav-tournament"); */
-        
-      
+        const tournament = document.getElementById("nav-tournament");
+            
         roster.addEventListener("click", () => this.showFightersPage());
-        /* tournament.addEventListener("click", () => iratournament); */
+        tournament.addEventListener("click", () => this.showTournamentPage());
       }
     createWelcomeCard() {
         this.cardContainer = document.createElement("div")
@@ -59,6 +59,18 @@ class MainPageCard {
         
         new FightersPage(this.parentId);
     }
+    showTournamentPage(){
+       /*  if(this.favFighters.length != this.maxFighters){
+          alert("You need to complete the roster to start the tournament")
+          return
+        } */
+          while (this.parent.firstChild) {
+              this.parent.removeChild(this.parent.firstChild)
+          }
+          
+          new TournamentFight(this.parentId, this.favFighters);
+      
+      }
 }
 
 export default MainPageCard
