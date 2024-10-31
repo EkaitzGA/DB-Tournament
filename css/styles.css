@@ -117,12 +117,13 @@
     width: 30%;
 
 }
+
+/*Estilos del torneo */
+
 #tournament-error-message{
 background-color: #ff5722;
 border: 3px solid black;
 font-size: 48px;
-
-
 }
 
 .tournament-grid-container {
@@ -135,10 +136,8 @@ font-size: 48px;
     margin: 0 auto;
 }
 
-
 .tournament-grid-container {
     padding-top:20px;
-    
     grid-template-areas:
         "a . . . . . e"
         ". i . . . k ."
@@ -152,6 +151,7 @@ font-size: 48px;
 
 
 .tournament-grid-item {
+    position: relative;
     background-image: url("../multimedia/favBackgroundCutted.jpg");
     border: 1px solid #ff5722;
     border-radius: 10px;
@@ -218,4 +218,31 @@ font-size: 48px;
 .item-14 {
     grid-area: n;
     opacity: 0.4;
+}
+.selected-fighter {
+    border: 3px solid #ff5722;
+    transform: scale(1.05);
+    transition: all 0.2s ease;
+}
+
+.placed-fighter {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.valid-cell {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.valid-cell:hover {
+    background-color: rgba(255, 215, 0, 0.1);
+}
+/*TODO, HAY QUE MEJORAR EL ESTILO DE COLOCACIÓN*/
+.grid-fighter {
+    display: flex;    
+   
+   
+    
+   
 }

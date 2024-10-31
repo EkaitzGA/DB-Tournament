@@ -18,7 +18,7 @@ export class TournamentFight {
     }
     convertSavedFighters(savedFighters) {
         if (!savedFighters || savedFighters.length === 0) return null;
-        
+
         return savedFighters.map(fighter => ({
             fighter: fighter
         }));
@@ -52,7 +52,7 @@ export class TournamentFight {
         this.createTournamentFighters()
         this.displayTournamentFighters()
         this.createTournamentGrid()
-        this.initDragAndDrop()
+        this.selectFighter()
     }
 
     // Crear un contenedor principal para el torneo
@@ -68,7 +68,7 @@ export class TournamentFight {
         header.classList.add("tournament-header");
 
         const title = document.createElement("h2");
-        title.textContent = `Tournament: ${this.favFighters.length} Fighters`;
+        title.textContent = "Click first on the fighter and then on an empty spot to add it. Click on Tournament to reset.";
 
         header.appendChild(title);
         this.tournamentContainer.appendChild(header);
@@ -129,6 +129,62 @@ export class TournamentFight {
         container.appendChild(card);
     }
 
+    selectFighter() {
+        let selectedFighter = null;
+        const fighterContainers = document.querySelectorAll('[id^="tournament-fighter-container-"]');
+        const validGridCells = document.querySelectorAll('.tournament-grid-item.item-1, .tournament-grid-item.item-2, .tournament-grid-item.item-3, .tournament-grid-item.item-4, .tournament-grid-item.item-5, .tournament-grid-item.item-6, .tournament-grid-item.item-7, .tournament-grid-item.item-8');
+
+        validGridCells.forEach(cell => {
+            cell.classList.add("valid-cell")
+        })
+        //Seleccionar luchador
+        fighterContainers.forEach(container => {
+            const card = container.querySelector('#fighter-card')
+
+            card.addEventListener('click', () => {
+                if (selectedFighter) {
+                    selectedFighter.classList.remove('selected-fighter')
+                }
+                if (selectedFighter === card) {
+                    selectedFighter = null;
+                    return;
+                }
+
+                selectedFighter = card;
+                card.classList.add('selected-fighter')
+            });
+        });
+        //Colocarlo en el grid
+        validGridCells.forEach(cell => {
+            cell.addEventListener('click', () => {
+                if (!selectedFighter) return
+
+                if (cell.hasChildNodes()) {
+                    return
+                }
+
+                // En lugar de clonar toda la tarjeta, extraemos solo la imagen del luchador
+                const fighterImage = selectedFighter.querySelector('#fighter-pic')
+                const clonedImage = fighterImage.cloneNode(true)
+
+                // Cambiamos las clases de la imagen clonada si es necesario
+                clonedImage.classList.add('grid-fighter')
+                clonedImage.classList.remove('selected-fighter')
+
+                // Agregamos solo la imagen a la celda
+                cell.appendChild(clonedImage)
+
+                selectedFighter.classList.add('placed-fighter');
+                selectedFighter.classList.remove('selected-fighter');
+                selectedFighter = null;
+            })
+        })
+
+
+
+    }
+
+
     createTournamentGrid() {
         const gridContainer = document.createElement("div");
         gridContainer.classList.add("tournament-grid-container");
@@ -145,7 +201,7 @@ export class TournamentFight {
 
         this.tournamentContainer.append(gridContainer, this.simFightButton);
 
-        this.fighterCards = document.querySelectorAll('#tournament-fighter-container-*');
+        this.fighterCards = document.querySelectorAll('[id^="tournament-fighter-container-"]');
         this.gridCells = document.querySelectorAll('.tournament-grid-item');
 
 
