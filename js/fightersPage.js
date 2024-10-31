@@ -80,7 +80,15 @@ class FightersPage {
     }
     this.showFighters()
   }
+  getSelectedFighters() {
+    const savedFighters = localStorage.getItem('tournamentFighters');
+    return savedFighters ? JSON.parse(savedFighters) : [];
+  }
 
+  isFighterSelected(fighter) {
+    const selectedFighters = this.getSelectedFighters();
+    return selectedFighters.some(selected => selected.fighter.id === fighter.id);
+  }
   showFighters() {
     const fighters = store.getFightersData();
     if (fighters && fighters.items) {
@@ -94,7 +102,10 @@ class FightersPage {
           return fighterRace === this.currentFilter;
         });
       }
-      this.displayFighters(filteredFighters);
+
+      const availableFighters = filteredFighters.filter(fighter => !this.isFighterSelected(fighter))
+
+      this.displayFighters(availableFighters);
     }
   }
 
@@ -105,12 +116,17 @@ class FightersPage {
   }
 
   displayFighters(fighters) {
+    this.gridContainer.innerHTML = ""
     fighters.forEach(fighter => {
       const cardContainer = document.createElement("div");
       cardContainer.id = `fighter-container-${fighter.id}`;
       this.gridContainer.appendChild(cardContainer);
 
-      new FavFighterCard(fighter, cardContainer.id, this.tournamentCounter.addFighter);
+      new FavFighterCard(fighter, cardContainer.id, (fighterCard) => {
+        this.tournamentCounter.addFighter(fighterCard);
+        this.showFighters()
+      }
+      );
     });
   }
 
@@ -164,27 +180,60 @@ export class Tournament {
   constructor(parentId) {
     this.parentId = parentId
     this.parent = document.getElementById(parentId);
-    this.favFighters = []
-    this.addFighter = this.addFighter.bind(this);
     this.maxFighters = 8
+    this.favFighters = [];
+    this.addFighter = this.addFighter.bind(this);
+    this.loadSavedFighters()
     this.createCounter()
     this.resetButton()
     this.startTournament()
   }
-
   createCounter() {
     this.counter = document.createElement("p")
     this.counter.classList.add("counter")
     this.counter.innerText = `Tournament roster: ${this.favFighters.length}/${this.maxFighters}`
     this.parent.appendChild(this.counter)
   }
+  saveFighterToStorage(fighter) {
+    const fighterData = {
+      id: fighter.fighter.id,
+      name: fighter.fighter.name,
+      race: fighter.fighter.race,
+      image: fighter.fighter.image
+    };
+
+    const savedFighters = this.getSavedFighters();
+    savedFighters.push(fighterData);
+    localStorage.setItem('tournamentFighters', JSON.stringify(savedFighters));
+  }
+
+  // Obtener luchadores guardados
+  getSavedFighters() {
+    const savedFighters = localStorage.getItem('tournamentFighters');
+    return savedFighters ? JSON.parse(savedFighters) : [];
+  }
+
+  // Cargar y recrear los luchadores guardados
+  loadSavedFighters() {
+    const savedFighters = this.getSavedFighters();
+    savedFighters.forEach(fighterData => {
+      const fighter = {
+        fighter: fighterData,
+        card: null // La card se creará cuando se muestre en la UI
+      };
+      this.favFighters.push(fighter);
+    });
+  }
+
   addFighter(fighter) {
     if (this.favFighters.length >= this.maxFighters) {
-      return
+      return;
     }
-    this.favFighters.push(fighter)
-    this.updateDisplay(fighter)
+    this.favFighters.push(fighter);
+    this.saveFighterToStorage(fighter);
+    this.updateDisplay(fighter);
   }
+ 
   updateDisplay(fighter) {
     this.counter.innerText = `Tournament roster: ${this.favFighters.length}/${this.maxFighters}`
     if (fighter.card) {
@@ -201,6 +250,7 @@ export class Tournament {
   }
   actualReset() {
     this.favFighters = []
+    localStorage.removeItem("tournamentFighters")
     this.counter.innerText = `Tournament roster: ${this.favFighters.length}/${this.maxFighters}`
 
     const grid = document.getElementById("fighters-grid")
@@ -229,17 +279,21 @@ export class Tournament {
     this.goTournament.addEventListener("click", () => this.showTournamentPage())
   }
 
-  showTournamentPage(){
-    if(this.favFighters.length != this.maxFighters){
+  showTournamentPage() {
+    if (this.favFighters.length != this.maxFighters) {
       alert("You need to complete the roster to start the tournament")
       return
+
     }
-      while (this.parent.firstChild) {
-          this.parent.removeChild(this.parent.firstChild)
-      }
-      
-      new TournamentFight(this.parentId, this.favFighters);
-  
+    /* localStorage.removeItem("tournamentFighters") */
+    while (this.parent.firstChild) {
+      this.parent.removeChild(this.parent.firstChild)
+    }
+    const tournamentFighters = this.favFighters.map(fighter => ({
+    fighter: fighter.fighter || fighter}))
+
+    new TournamentFight(this.parentId, tournamentFighters);
+
   }
 
 }

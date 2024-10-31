@@ -2,18 +2,39 @@ export class TournamentFight {
     constructor(parentId, favFighters) {
         this.parentId = parentId
         this.parent = document.getElementById(parentId);
+        const savedFighters = this.getSavedFighters()
+        this.favFighters = favFighters || this.convertSavedFighters(savedFighters)
         if (!favFighters || favFighters.length === 0) {
             this.displayErrorMessage();
             return;
         }
-        this.favFighters = favFighters
-        this.startTournament()
-    }
 
+        this.startTournament()
+
+    }
+    getSavedFighters() {
+        const savedFighters = localStorage.getItem('tournamentFighters');
+        return savedFighters ? JSON.parse(savedFighters) : [];
+    }
+    convertSavedFighters(savedFighters) {
+        if (!savedFighters || savedFighters.length === 0) return null;
+        
+        return savedFighters.map(fighter => ({
+            fighter: fighter
+        }));
+    }
     displayErrorMessage() {
+        const savedFighters = this.getSavedFighters()
+        if (savedFighters && savedFighters.length > 0) {
+            this.favFighters = this.convertSavedFighters(savedFighters)
+            this.startTournament()
+            return
+        }
+
         const errorElement = document.createElement("div")
         errorElement.id = ("tournament-error-message")
-        errorElement.textContent = "Not enough fighters have been selected for tournament, please go to the fighters roster"
+        errorElement.textContent = "Not enough fighters have been selected for tournament, please go to the fighters roster! NOW!"
+
         const errorPicSatan = document.createElement("img")
         errorPicSatan.id = ("error-satan")
         errorPicSatan.src = ("../multimedia/mrsatan.webp")
@@ -22,11 +43,16 @@ export class TournamentFight {
     }
 
     startTournament() {
+        while (this.parent.firstChild) {
+            this.parent.removeChild(this.parent.firstChild);
+        }
+
         this.createTournamentLayout()
         this.createTournamentHeader()
         this.createTournamentFighters()
         this.displayTournamentFighters()
         this.createTournamentGrid()
+        this.initDragAndDrop()
     }
 
     // Crear un contenedor principal para el torneo
@@ -69,6 +95,7 @@ export class TournamentFight {
 
         const card = document.createElement("div");
         card.id = "fighter-card";
+        card.draggable = true
 
         const backgroundPic = document.createElement("img");
         backgroundPic.id = "fighter-background-pic";
@@ -117,7 +144,13 @@ export class TournamentFight {
         }
 
         this.tournamentContainer.append(gridContainer, this.simFightButton);
+
+        this.fighterCards = document.querySelectorAll('#tournament-fighter-container-*');
+        this.gridCells = document.querySelectorAll('.tournament-grid-item');
+
+
     }
+
 }
 
 

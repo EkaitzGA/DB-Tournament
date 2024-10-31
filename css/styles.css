@@ -104,7 +104,6 @@
     padding: 20px;
 }
 
-/* Contenedor del torneo */
 #tournament-fighters {
     display: flex;
     flex-direction: row;
@@ -118,6 +117,13 @@
     width: 30%;
 
 }
+#tournament-error-message{
+background-color: #ff5722;
+border: 3px solid black;
+font-size: 48px;
+
+
+}
 
 .tournament-grid-container {
     display: grid;
@@ -125,12 +131,11 @@
     grid-template-rows: repeat(7, 100px);
     gap: 10px;
     width: 100%;
-    /* Ajustar el tamaño según sea necesario */
     max-width: 600px;
     margin: 0 auto;
 }
 
-/* Definimos las áreas de la cuadrícula para cada carta */
+
 .tournament-grid-container {
     padding-top:20px;
     
@@ -145,7 +150,7 @@
     ;
 }
 
-/* Asignamos cada carta a su área correspondiente */
+
 .tournament-grid-item {
     background-image: url("../multimedia/favBackgroundCutted.jpg");
     border: 1px solid #ff5722;
@@ -187,24 +192,30 @@
 
 .item-9 {
     grid-area: i;
+    opacity: 0.4;
 }
 
 .item-10 {
     grid-area: j;
+    opacity: 0.4;
 }
 
 .item-11 {
     grid-area: k;
+    opacity: 0.4;
 }
 
 .item-12 {
     grid-area: l;
+    opacity: 0.4;
 }
 
 .item-13 {
     grid-area: m;
+    opacity: 0.4;
 }
 
 .item-14 {
     grid-area: n;
+    opacity: 0.4;
 }
