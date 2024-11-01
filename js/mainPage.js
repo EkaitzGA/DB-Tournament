@@ -36,6 +36,7 @@ class MainPageCard {
         
         this.showFightersButton = document.createElement("button")
         this.showFightersButton.id = "main-button"
+        this.showFightersButton.classList.add("tournament-button")
         this.showFightersButton.innerText = "Show me fighters roster"
         this.showFightersButton.addEventListener("click", async () => {
             try {

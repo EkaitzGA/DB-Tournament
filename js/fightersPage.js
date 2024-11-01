@@ -244,6 +244,7 @@ export class Tournament {
   resetButton() {
     this.reset = document.createElement("button")
     this.reset.id = "reset-button"
+    this.reset.classList.add("tournament-button")
     this.reset.innerText = "Reset fighters"
     this.parent.appendChild(this.reset)
     this.reset.addEventListener("click", () => this.actualReset())
@@ -274,6 +275,7 @@ export class Tournament {
   startTournament() {
     this.goTournament = document.createElement("button")
     this.goTournament.id = "go-tournament-button"
+    this.goTournament.classList.add("tournament-button")
     this.goTournament.innerText = "Save and START TOURNAMENT"
     this.parent.appendChild(this.goTournament)
     this.goTournament.addEventListener("click", () => this.showTournamentPage())

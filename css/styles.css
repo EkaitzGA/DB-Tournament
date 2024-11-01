@@ -56,6 +56,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
+    transition: opacity 0.3s ease;
 }
 
 #fighter-background-pic {
@@ -76,6 +77,7 @@
     max-height: 250px;
     object-fit: contain;
     z-index: 2;
+    opacity: 1 !important;
 }
 
 #fighter-info {
@@ -140,11 +142,11 @@ font-size: 48px;
     padding-top:20px;
     grid-template-areas:
         "a . . . . . e"
-        ". i . . . k ."
+        ". i . w . k ."
         "b . . . . . f"
         ". . m . n . ."
         "c . . . . . g"
-        ". j . . . l ."
+        ". j . z . l ."
         "d . . . . . h"
     ;
 }
@@ -156,6 +158,7 @@ font-size: 48px;
     border: 1px solid #ff5722;
     border-radius: 10px;
     background-size: cover;
+    transition: opacity 0.3s ease;
 }
 
 .item-1 {
@@ -192,32 +195,31 @@ font-size: 48px;
 
 .item-9 {
     grid-area: i;
-    opacity: 0.4;
+    
 }
 
 .item-10 {
     grid-area: j;
-    opacity: 0.4;
-}
+    }
 
 .item-11 {
     grid-area: k;
-    opacity: 0.4;
+    
 }
 
 .item-12 {
     grid-area: l;
-    opacity: 0.4;
+    
 }
 
 .item-13 {
     grid-area: m;
-    opacity: 0.4;
+   
 }
 
 .item-14 {
     grid-area: n;
-    opacity: 0.4;
+    
 }
 .selected-fighter {
     border: 3px solid #ff5722;
@@ -226,7 +228,7 @@ font-size: 48px;
 }
 
 .placed-fighter {
-    opacity: 0.5;
+    opacity: 0.3;
     pointer-events: none;
 }
 
@@ -240,9 +242,129 @@ font-size: 48px;
 }
 /*TODO, HAY QUE MEJORAR EL ESTILO DE COLOCACIÓN*/
 .grid-fighter {
-    display: flex;    
+    display: flex;   
+    opacity: 1 !important;  
+    transition: opacity 0.3s ease;
+}
+.eliminated{
+    opacity: 0.5 !important;
+    transition: opacity 0.3s ease;
+}
+.advancing-fighter{
+    opacity: 1 !important;
+    transition: opacity 0.3s ease;
+}
+.tournament-winner{
+    position: absolute;
+    transform: scale(2.5);
+    transform: translateY(-20%);
+    z-index: 100;
+    opacity: 1 !important;
+}
+.victory-message{
+    position: absolute;
+    z-index: 101;
+    color: #ff5722;
+    font-size: 4rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    translate: 0 30%;
    
-   
-    
-   
+}
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: black;
+    padding: 2rem;
+    border-radius: 10px;
+    border: 2px solid #ff5722;
+    text-align: center;
+    max-width: 90%;
+    width: 600px;
+}
+
+.modal-winner-image {
+    max-width: 300px;
+    max-height: 300px;
+    margin: 1rem auto;
+}
+
+.modal-title {
+    color: white;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.modal-question {
+    color: white;
+    font-size: 1.2rem;
+    margin: 1rem 0;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.modal-button {
+    padding: 0.5rem 2rem;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.modal-button-yes {
+    background-color: #ff5722;
+    color: white;
+}
+
+.modal-button-no {
+    background-color: #3f3d3c;
+    color: white;
+}
+
+.modal-button:hover {
+    opacity: 0.9;
+}
+
+.tournament-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.tournament-button {
+    padding: 0.5rem 2rem;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    background-color: #ff5722;
+    color: white;
+}
+
+.tournament-button:hover {
+    background-color: #3f3d3c;
+}
+
+.tournament-button:disabled {
+    background-color: #666;
+    cursor: not-allowed;
 }
