@@ -8,12 +8,15 @@ export class TournamentFight {
             this.displayErrorMessage();
             return;
         }
+        
         this.startTournament()
     }
+
     getSavedFighters() {
         const savedFighters = localStorage.getItem('tournamentFighters');
         return savedFighters ? JSON.parse(savedFighters) : [];
     }
+
     convertSavedFighters(savedFighters) {
         if (!savedFighters || savedFighters.length === 0) return null;
 
@@ -21,6 +24,7 @@ export class TournamentFight {
             fighter: fighter
         }));
     }
+
     displayErrorMessage() {
         const savedFighters = this.getSavedFighters()
         if (savedFighters && savedFighters.length > 0) {
@@ -47,13 +51,12 @@ export class TournamentFight {
 
         this.createTournamentLayout()
         this.createTournamentHeader()
+        this.createTournamentGrid()
         this.createTournamentFighters()
         this.displayTournamentFighters()
-        this.createTournamentGrid()
         this.selectFighter()
-
-        
     }
+
     createTournamentLayout() {
         this.tournamentContainer = document.createElement("div");
         this.tournamentContainer.id = "tournament-container";
@@ -99,7 +102,6 @@ export class TournamentFight {
         backgroundPic.src = "../multimedia/favBackgroundCutted.jpg";
         backgroundPic.alt = "fondo de carta"
 
-
         const fighterImage = document.createElement("div");
         fighterImage.classList.add("tournament-fighter-image");
 
@@ -116,11 +118,7 @@ export class TournamentFight {
             raceInfo = "God";
         }
 
-        info.innerHTML = `
-            <h3>${fighter.name}</h3>
-            <p>Race: ${raceInfo}</p>
-        `;
-
+        info.innerHTML = `<h3>${fighter.name}</h3><p>Race: ${raceInfo}</p>`;
 
         card.append(backgroundPic, info, fighterPic);
         container.appendChild(card);
@@ -187,7 +185,6 @@ export class TournamentFight {
         const buttonsContainer = document.createElement("div");
         buttonsContainer.classList.add("tournament-buttons");
 
-        // Botón Auto-Fill
         this.autoFillButton = document.createElement("button");
         this.autoFillButton.classList.add("tournament-button");
         this.autoFillButton.innerText = "Auto-Fill";
@@ -218,40 +215,33 @@ export class TournamentFight {
                 alert('Please place all 8 fighters on the outside cells before simulating!');
             }
         });
-
     }
+    
+    
     autoFillGrid() {
-        // Limpiar el grid primero
         const validCells = document.querySelectorAll('.tournament-grid-item.item-1, .tournament-grid-item.item-2, .tournament-grid-item.item-3, .tournament-grid-item.item-4, .tournament-grid-item.item-5, .tournament-grid-item.item-6, .tournament-grid-item.item-7, .tournament-grid-item.item-8');
         validCells.forEach(cell => {
             cell.innerHTML = '';
         });
-    
-        // Resetear todos los luchadores
+
         const fighterCards = document.querySelectorAll('[id^="tournament-fighter-container-"] #fighter-card');
         fighterCards.forEach(card => {
             card.style.opacity = '1';
             card.classList.remove('placed-fighter', 'selected-fighter');
         });
-    
-        // Convertir NodeList a Array para poder mezclarlo
+
         const fighterCardsArray = Array.from(fighterCards);
         const validCellsArray = Array.from(validCells);
-    
-        // Mezclar aleatoriamente los luchadores
         const shuffledFighters = fighterCardsArray.sort(() => Math.random() - 0.5);
-    
-        // Colocar los primeros 8 luchadores en las celdas
+
         for (let i = 0; i < 8 && i < shuffledFighters.length; i++) {
             const fighter = shuffledFighters[i];
             const cell = validCellsArray[i];
-            
-            // Clonar y colocar la imagen del luchador
+
             const fighterImg = fighter.querySelector('#fighter-pic').cloneNode(true);
             fighterImg.classList.add('grid-fighter');
             cell.appendChild(fighterImg);
-    
-            // Marcar el luchador como colocado
+
             fighter.style.opacity = '0.3';
             fighter.classList.add('placed-fighter');
         }
@@ -323,7 +313,7 @@ export class TournamentFight {
         this.showWinnerModal(winnerImage)
     }
     showWinnerModal(winnerImage) {
-        // Crear elementos del modal
+        
         const modalOverlay = document.createElement('div');
         modalOverlay.classList.add('modal-overlay');
 
@@ -352,7 +342,6 @@ export class TournamentFight {
         noButton.classList.add('modal-button', 'modal-button-no');
         noButton.textContent = 'NO';
 
-        // Añadir eventos a los botones
         yesButton.addEventListener('click', () => {
             modalOverlay.remove();
             this.restartSimulation();
@@ -363,7 +352,6 @@ export class TournamentFight {
             this.resetTournament();
         });
 
-        // Construir el modal
         buttonsContainer.append(yesButton, noButton);
         modalContent.append(title, winnerImg, question, buttonsContainer);
         modalOverlay.appendChild(modalContent);
@@ -371,31 +359,29 @@ export class TournamentFight {
     }
 
     resetTournament() {
-        // Eliminar clases y estilos de la simulación anterior
+        
         const allGridItems = document.querySelectorAll('.tournament-grid-item');
         allGridItems.forEach(item => {
             item.innerHTML = '';
             item.style.opacity = '1';
         });
 
-        // Resetear los luchadores disponibles
         const fighterCards = document.querySelectorAll('[id^="tournament-fighter-container-"] #fighter-card');
         fighterCards.forEach(card => {
             card.style.opacity = '1';
             card.classList.remove('placed-fighter', 'selected-fighter');
         });
 
-        // Resetear las celdas avanzadas
         const advancedCells = document.querySelectorAll('.tournament-grid-item.item-9, .tournament-grid-item.item-10, .tournament-grid-item.item-11, .tournament-grid-item.item-12, .tournament-grid-item.item-13, .tournament-grid-item.item-14');
         advancedCells.forEach(cell => {
             cell.style.opacity = '0.3';
         });
         this.simFightButton.disabled = true;
-    this.autoFillButton.disabled = false;
+        this.autoFillButton.disabled = false;
     }
 
     restartSimulation() {
-        // Guardar las posiciones actuales de los luchadores en las celdas iniciales
+       
         const initialFighters = [];
         for (let i = 1; i <= 8; i++) {
             const cell = document.querySelector(`.tournament-grid-item.item-${i}`);
@@ -408,27 +394,23 @@ export class TournamentFight {
             }
         }
 
-        // Limpiar todas las celdas y estilos
         const allGridItems = document.querySelectorAll('.tournament-grid-item');
         allGridItems.forEach(item => {
             item.innerHTML = '';
             item.style.opacity = '1';
         });
 
-        // Restaurar los luchadores a sus posiciones iniciales
         initialFighters.forEach(fighter => {
             const cell = document.querySelector(`.tournament-grid-item.item-${fighter.position}`);
             fighter.image.classList.add('grid-fighter');
             cell.appendChild(fighter.image);
         });
 
-        // Resetear las celdas avanzadas
         const advancedCells = document.querySelectorAll('.tournament-grid-item.item-9, .tournament-grid-item.item-10, .tournament-grid-item.item-11, .tournament-grid-item.item-12, .tournament-grid-item.item-13, .tournament-grid-item.item-14');
         advancedCells.forEach(cell => {
             cell.style.opacity = '0.3';
         });
 
-        // Mantener los luchadores originales como "placed"
         const fighterCards = document.querySelectorAll('[id^="tournament-fighter-container-"] #fighter-card');
         fighterCards.forEach(card => {
             card.style.opacity = '0.3';
@@ -436,7 +418,6 @@ export class TournamentFight {
             card.classList.remove('selected-fighter');
         });
 
-        // Iniciar nueva simulación después de un pequeño delay
         setTimeout(() => {
             this.simulateFights();
         }, 500);

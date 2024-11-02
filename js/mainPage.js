@@ -2,7 +2,6 @@ import { fetchData } from "./api.js"
 import FightersPage from "./fightersPage.js"
 import { TournamentFight } from "./tournamentPage.js";
 
-
 class MainPageCard {
     constructor(parentId) {
         this.parentId = parentId
@@ -25,7 +24,6 @@ class MainPageCard {
         this.leftContent = document.createElement("div")
         this.leftContent.classList.add("left-content")
         
-    
         this.messageContainer = document.createElement("img")
         this.messageContainer.id = "message-container"
         this.messageContainer.src = ("../multimedia/bocadillorelleno.png")
@@ -46,10 +44,8 @@ class MainPageCard {
                 console.error("Error loading fighters", error)
             }
         });
-
         this.cardContainer.append(this.leftContent, this.announcerPic)
         this.leftContent.append(this.messageContainer,this.showFightersButton)
-        
 
         this.parent.appendChild(this.cardContainer)
     }
@@ -57,20 +53,13 @@ class MainPageCard {
         while (this.parent.firstChild) {
             this.parent.removeChild(this.parent.firstChild)
         }
-        
         new FightersPage(this.parentId);
     }
     showTournamentPage(){
-       /*  if(this.favFighters.length != this.maxFighters){
-          alert("You need to complete the roster to start the tournament")
-          return
-        } */
           while (this.parent.firstChild) {
               this.parent.removeChild(this.parent.firstChild)
           }
-          
           new TournamentFight(this.parentId, this.favFighters);
-      
       }
 }
 

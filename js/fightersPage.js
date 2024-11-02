@@ -9,7 +9,6 @@ export class FilterBar {
     this.onFilterChange = onFilterChange
     this.createFilterContainer()
     this.createRaceSelector()
-    /* this.createSortByPower() */
   }
 
   createFilterContainer() {
@@ -40,14 +39,15 @@ export class FilterBar {
       this.onFilterChange(selectedRace);
     })
     return selector;
-
   }
+
   createSelector() {
     this.selector = document.createElement("select");
     this.selector.classList.add("race-selector")
     this.filters.appendChild(this.selector);
     return this.selector
   }
+
   addSelectorOptions(selector, options) {
     for (const option of options) {
       const optionElement = document.createElement("option")
@@ -57,11 +57,6 @@ export class FilterBar {
     }
     return selector
   }
-
-  /* createSortByPower() {
-
-  } */
-
 }
 
 class FightersPage {
@@ -160,9 +155,7 @@ class FavFighterCard {
     if (raceInfo.includes("Nucleico")) {
       raceInfo = "God"
     }
-    this.info.innerHTML =
-      `<h3>${this.fighter.name}</h3>
-    <p> Race: ${raceInfo}</p>`;
+    this.info.innerHTML = `<h3>${this.fighter.name}</h3><p> Race: ${raceInfo}</p>`;
 
     this.GoFightButton = document.createElement("button")
     this.GoFightButton.id = "fight-button"
@@ -170,7 +163,6 @@ class FavFighterCard {
     this.GoFightButton.addEventListener("click", () => this.addFighter(this))
 
     this.card.append(this.backgroundPic, this.info, this.GoFightButton, this.fighterPic);
-
 
     this.parent.appendChild(this.card);
   }
@@ -188,12 +180,14 @@ export class Tournament {
     this.resetButton()
     this.startTournament()
   }
+
   createCounter() {
     this.counter = document.createElement("p")
     this.counter.classList.add("counter")
     this.counter.innerText = `Tournament roster: ${this.favFighters.length}/${this.maxFighters}`
     this.parent.appendChild(this.counter)
   }
+
   saveFighterToStorage(fighter) {
     const fighterData = {
       id: fighter.fighter.id,
@@ -207,19 +201,17 @@ export class Tournament {
     localStorage.setItem('tournamentFighters', JSON.stringify(savedFighters));
   }
 
-  // Obtener luchadores guardados
   getSavedFighters() {
     const savedFighters = localStorage.getItem('tournamentFighters');
     return savedFighters ? JSON.parse(savedFighters) : [];
   }
 
-  // Cargar y recrear los luchadores guardados
   loadSavedFighters() {
     const savedFighters = this.getSavedFighters();
     savedFighters.forEach(fighterData => {
       const fighter = {
         fighter: fighterData,
-        card: null // La card se creará cuando se muestre en la UI
+        card: null
       };
       this.favFighters.push(fighter);
     });
@@ -233,7 +225,7 @@ export class Tournament {
     this.saveFighterToStorage(fighter);
     this.updateDisplay(fighter);
   }
- 
+
   updateDisplay(fighter) {
     this.counter.innerText = `Tournament roster: ${this.favFighters.length}/${this.maxFighters}`
     if (fighter.card) {
@@ -269,7 +261,6 @@ export class Tournament {
         new FavFighterCard(fighter, cardContainer.id, this.addFighter)
       })
     }
-
   }
 
   startTournament() {
@@ -285,20 +276,16 @@ export class Tournament {
     if (this.favFighters.length != this.maxFighters) {
       alert("You need to complete the roster to start the tournament")
       return
-
     }
-    /* localStorage.removeItem("tournamentFighters") */
     while (this.parent.firstChild) {
       this.parent.removeChild(this.parent.firstChild)
     }
     const tournamentFighters = this.favFighters.map(fighter => ({
-    fighter: fighter.fighter || fighter}))
+      fighter: fighter.fighter || fighter
+    }))
 
     new TournamentFight(this.parentId, tournamentFighters);
-
   }
-
 }
-
 
 export default FightersPage;

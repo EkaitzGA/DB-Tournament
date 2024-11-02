@@ -122,10 +122,10 @@
 
 /*Estilos del torneo */
 
-#tournament-error-message{
-background-color: #ff5722;
-border: 3px solid black;
-font-size: 48px;
+#tournament-error-message {
+    background-color: #ff5722;
+    border: 3px solid black;
+    font-size: 48px;
 }
 
 .tournament-grid-container {
@@ -139,7 +139,7 @@ font-size: 48px;
 }
 
 .tournament-grid-container {
-    padding-top:20px;
+    padding-top: 20px;
     grid-template-areas:
         "a . . . . . e"
         ". i . w . k ."
@@ -150,7 +150,6 @@ font-size: 48px;
         "d . . . . . h"
     ;
 }
-
 
 .tournament-grid-item {
     position: relative;
@@ -195,32 +194,33 @@ font-size: 48px;
 
 .item-9 {
     grid-area: i;
-    
+
 }
 
 .item-10 {
     grid-area: j;
-    }
+}
 
 .item-11 {
     grid-area: k;
-    
+
 }
 
 .item-12 {
     grid-area: l;
-    
+
 }
 
 .item-13 {
     grid-area: m;
-   
+
 }
 
 .item-14 {
     grid-area: n;
-    
+
 }
+
 .selected-fighter {
     border: 3px solid #ff5722;
     transform: scale(1.05);
@@ -240,37 +240,32 @@ font-size: 48px;
 .valid-cell:hover {
     background-color: rgba(255, 215, 0, 0.1);
 }
-/*TODO, HAY QUE MEJORAR EL ESTILO DE COLOCACIÓN*/
+
 .grid-fighter {
-    display: flex;   
-    opacity: 1 !important;  
-    transition: opacity 0.3s ease;
-}
-.eliminated{
-    opacity: 0.5 !important;
-    transition: opacity 0.3s ease;
-}
-.advancing-fighter{
+    display: flex;
     opacity: 1 !important;
     transition: opacity 0.3s ease;
 }
-.tournament-winner{
+
+.eliminated {
+    opacity: 0.5 !important;
+    transition: opacity 0.3s ease;
+}
+
+.advancing-fighter {
+    opacity: 1 !important;
+    transition: opacity 0.3s ease;
+}
+
+.tournament-winner {
     position: absolute;
     transform: scale(2.5);
     transform: translateY(-20%);
     z-index: 100;
     opacity: 1 !important;
 }
-.victory-message{
-    position: absolute;
-    z-index: 101;
-    color: #ff5722;
-    font-size: 4rem;
-    font-weight: bold;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-    translate: 0 30%;
-   
-}
+
+
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -342,22 +337,49 @@ font-size: 48px;
     opacity: 0.9;
 }
 
-.tournament-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-top: 1rem;
+.counter{
+    color: white;
+    font-weight: bold;
+    font-size: 1.5rem;
+    background-color:black;
+    border-radius: 5px;
+    display: inline-block;
+    padding: 4px;
 }
-
-.tournament-button {
+.race-selector {
     padding: 0.5rem 2rem;
     font-size: 1.1rem;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    background-color: #ff5722;
+    color: white;
+    margin: 10px;
+}
+
+.race-selector option {
+    background-color: #3f3d3c;
+    color: white;
+}
+
+.tournament-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    margin: 1rem;
+    padding: 10px;
+}
+
+.tournament-button {
+    padding: 0.5rem 2rem;
+    font-size: 1.1rem;
+    border-radius: 5px;
+    cursor: pointer;
     transition: background-color 0.3s ease;
     background-color: #ff5722;
     color: white;
+    margin: 0 0.5rem;
 }
 
 .tournament-button:hover {
