@@ -1,5 +1,8 @@
 # Changelog DB Tournament Simulator
 
+## Version 0.3.2
+Footer añadido
+
 ## Version 0.3.1
 Arreglada la coherencia estética de todos los botones y secciones de la página
 
