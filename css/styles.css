@@ -41,21 +41,25 @@
 .left-content {
     position: relative;
     display: flex;
-    flex-direction: column;
-    width: 55%;
+    flex-direction: row;
+    width: 100%;
+}
+#main-button{
+    width: 100%;
+    margin-top: 100px;
 }
 
 #message-container {
     position: relative;
     display: flex;
     z-index: 1;
-    width: 100%;
+    width: 90vw;
 
 }
 
 #announcer-pic {
     display: flex;
-    width: 42%;
+    width: 100%;
     justify-content: flex-end;
 
 }
@@ -406,4 +410,109 @@
 .tournament-button:disabled {
     background-color: #666;
     cursor: not-allowed;
+}
+
+@media screen and (max-width: 768px) {
+    #navbar {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #navbar a {
+        padding: 15px;
+        font-size: 1.4em;
+        width: 100%;
+    }
+
+    #card-container {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: 20px;
+    }
+    
+    .left-content {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        width: 55%;
+    }
+    
+    #message-container {
+        position: relative;
+        display: flex;
+        z-index: 1;
+        width: 100%;
+    }
+    
+    #announcer-pic {
+        display: flex;
+        width: 42%;
+        justify-content: flex-end;
+    }
+
+    .tournament-grid-container {
+        grid-template-rows: repeat(7, 80px);
+        padding: 10px;
+        max-width: 100%;
+        overflow-x: auto;
+    }
+
+    .tournament-disclaimer {
+        font-size: 24px;
+        padding: 10px;
+    }
+
+    #tournament-error-message {
+        font-size: 28px;
+    }
+
+    .tournament-button {
+        padding: 12px 24px;
+        font-size: 1.2em;
+        width: 100%;
+        margin: 5px 0;
+    }
+
+    .race-selector {
+        width: 100%;
+        margin: 10px 0;
+        padding: 12px;
+        font-size: 1.2em;
+    }
+
+    #fighters-grid {
+        grid-template-columns: 1fr;
+        padding: 10px;
+    }
+
+    #tournament-fighters {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .modal-content {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .modal-title {
+        font-size: 1.8rem;
+    }
+
+    .modal-winner-image {
+        max-width: 80%;
+    }
+
+    .counter {
+        font-size: 1.3rem;
+        padding: 8px;
+    }
+
+    .tournament-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
 }
