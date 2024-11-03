@@ -68,7 +68,8 @@ export class TournamentFight {
         header.classList.add("tournament-header");
 
         const title = document.createElement("h2");
-        title.textContent = "Click first on the fighter and then on an empty spot to add it. Click on Tournament to reset.";
+        title.classList.add("tournament-disclaimer")
+        title.textContent = "Click first on the fighter below and then on an empty spot to add it. Click on Tournament to reset.";
 
         header.appendChild(title);
         this.tournamentContainer.appendChild(header);

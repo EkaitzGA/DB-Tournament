@@ -1,3 +1,13 @@
+@font-face {
+    font-family: 'Saiyans';
+    src: url('../fonts/Saiyan-Sans.ttf') format('truetype');
+}
+
+#title-font{
+    font-family: 'Saiyans';
+    font-weight: lighter;
+    color: white;
+}
 .background-image {
     background-image: url("../multimedia/tournamentBackground.jpg");
     background-size: cover;
@@ -17,6 +27,7 @@
     color: white;
     display: block;
     font-size: 1.2em;
+    font-weight: bold;
 }
 
 #card-container {
@@ -126,6 +137,12 @@
     background-color: #ff5722;
     border: 3px solid black;
     font-size: 48px;
+}
+.tournament-disclaimer{
+    background-color: #ff5722;
+    border: 3px solid black;
+    display: inline-block;
+    font-size: 42px;
 }
 
 .tournament-grid-container {
