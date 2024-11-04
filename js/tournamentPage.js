@@ -216,6 +216,7 @@ export class TournamentFight {
                 alert('Please place all 8 fighters on the outside cells before simulating!');
             }
         });
+        this.simFightButton.disabled = false;
     }
     
     
